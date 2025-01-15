@@ -1,0 +1,114 @@
+﻿@using System.Text.RegularExpressions;
+@using PagedList;
+@using PagedList.Mvc;
+@using KurumsalWeb.Helper;
+
+@model IPagedList<KurumsalWeb.Models.Model.Blog>
+
+@{
+    ViewBag.Title = "Kategori Blogları";
+    Layout = "~/Views/Shared/_SiteLayout.cshtml";
+}
+<header>
+    <div class="navbar navbar-default navbar-static-top">
+        <div class="container">
+            <div class="navbar-header" style="margin-top:-40px;">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/Anasayfa/">@*<span>K</span>urumsalWeb*@<img src="@ViewBag.Kimlik.LogoURL" /> <span>@ViewBag.Kimlik.Unvan.Substring(0, 1)</span>@ViewBag.Kimlik.Unvan.Substring(1)</a>
+            </div>
+            <div class="navbar-collapse collapse ">
+                <ul class="nav navbar-nav">
+                    <li><a href="/Anasayfa/">Anasayfa</a></li>
+                    <li><a href="/Hakkimizda/">Hakkımızda</a></li>
+                    <li><a href="/Hizmetlerimiz/">Hizmetlerimiz</a></li>
+                    <li class="active"><a href="/BlogPost/">Blog</a></li>
+                    <li><a href="/Iletisim/">İletişim</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <section id="inner-headline">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <ul class="breadcrumb">
+                        <li><a href="~/Anasayfa/"><i class="fa fa-home"></i></a><i class="icon-angle-right"></i></li>
+                        <li><a href="~/BlogPost/">Blog</a><i class="icon-angle-right"></i></li>
+                        <li class="active">@ViewBag.Title</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<section id="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                @foreach (var blog in Model)
+                {
+                    <article>
+                        <div class="post-image">
+                            <div class="post-heading">
+                                <h3><a href="/BlogPost/@SeoHelper.ToSeoUrl(blog.Baslik).ToLower()-@blog.Id">@blog.Baslik</a></h3>
+                            </div>
+                            <img src="@blog.ResimURL" alt="@blog.Baslik" />
+                        </div>
+                        <p>
+                            @{
+                                string kisaltma = Regex.Replace(blog.Icerik, "<.*?>", string.Empty);
+                                if (kisaltma.Length > 200)
+                                {
+                                    kisaltma = kisaltma.Substring(0, 200) + "...";
+                                }
+                                @Html.Raw(kisaltma)
+                            }
+                        </p>
+                        <div class="bottom-article">
+                            <ul class="meta-post">
+                                <li><i class="icon-folder-open"></i><a href="#"> @blog.Kategori.KategoriAd</a></li>
+                            </ul>
+                            <a href="/BlogPost/@SeoHelper.ToSeoUrl(blog.Baslik).ToLower()-@blog.Id" class="pull-right">devamı.. <i class="icon-angle-right"></i></a>
+                        </div>
+                    </article>
+                }
+
+                <div id="pagination">
+                    @Html.PagedListPager(Model, Sayfa => Url.Action("Blog", new { Sayfa }), PagedListRenderOptions.Classic)
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <aside class="right-sidebar">
+                    <div class="widget">
+                        <form class="form-search">
+                            <input class="form-control" type="text" placeholder="Arama..">
+                        </form>
+                    </div>
+                    <div class="widget">
+                        <h5 class="widgetheading">Kategoriler</h5>
+                        @{
+                            Html.RenderAction("BlogKategoriPartial", "Home");
+                        }
+                    </div>
+                    <div class="widget">
+                        <h5 class="widgetheading">Popüler Blog Kayıtları</h5>
+                        <ul class="recent">
+                            @{
+                                Html.RenderAction("SonBlogKayitlariPartial", "Home");
+                            }
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </div>
+</section>
+

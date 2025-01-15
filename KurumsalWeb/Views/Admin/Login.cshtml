@@ -1,0 +1,57 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Kurumsal Admin Panel Girişi</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="~/Content/AdminLayout/css/bootstrap.min.css" rel="stylesheet">
+    <!-- bootstrap theme -->
+    <link href="~/Content/AdminLayout/css/bootstrap-theme.css" rel="stylesheet">
+    <!--external css-->
+    <!-- font icon -->
+    <link href="~/Content/AdminLayout/css/elegant-icons-style.css" rel="stylesheet" />
+    <link href="~/Content/AdminLayout/css/font-awesome.css" rel="stylesheet" />
+    <!-- Custom styles -->
+    <link href="~/Content/AdminLayout/css/style.css" rel="stylesheet">
+    <link href="~/Content/AdminLayout/css/style-responsive.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <form class="login-form" method="post" action="/Admin/Login/">
+            <div class="login-wrap">
+                @if (Session["id"] == null)
+                {
+                    if (TempData["No"] != null)
+                    {
+                        <div class="alert alert-danger mb-2 fw-bold text-center">@TempData["No"]</div>
+                    }
+                    if (TempData["Ok"] != null)
+                    {
+                        <div class="alert alert-info mb-2 fw-bold text-center">@TempData["Ok"]</div>
+                    }
+                }
+                <p class="login-img"><i class="icon_lock_alt"></i></p>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="icon_profile"></i></span>
+                    <input type="text" class="form-control" name="Eposta" placeholder="Eposta" required autofocus>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="icon_key_alt"></i></span>
+                    <input type="password" class="form-control" name="Sifre" placeholder="Şifre" required>
+                </div>
+
+                <button class="btn btn-primary btn-lg btn-block" type="submit">Giriş Yap</button>
+                <a href="/Admin/ForgotMyPassword/" class="btn btn-primary btn-lg btn-block">Şifremi Unuttum</a>
+
+            </div>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,36 @@
+﻿@model IEnumerable<KurumsalWeb.Models.Model.Hizmet>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2><strong>Hizmetler</strong></h2>
+
+@Html.ActionLink("Hizmet Ekle", "Create", null, new {@class="btn btn-success"})
+<hr />
+<table class="table table-responsive">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Başlık</th>
+            <th>Açıklama</th>
+            <th>Resim Yolu</th>
+            <th>İşlemler</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var hizmet in Model)
+        {
+        <tr>
+            <td>@hizmet.Id</td>
+            <td>@hizmet.Baslik</td>
+            <td>@Html.Raw(hizmet.Aciklama)</td>
+            <td><img width="100" height="100" src="@hizmet.ResimURL" /></td>
+            <td>
+                @Html.ActionLink("Düzenle", "Edit", new { hizmet.Id }, new { @class = "btn btn-sm btn-warning" })
+                @Html.ActionLink("Sil", "Delete", new { hizmet.Id }, new { @class = "btn btn-sm btn-danger" })
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

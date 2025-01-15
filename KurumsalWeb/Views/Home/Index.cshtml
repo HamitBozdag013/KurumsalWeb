@@ -1,0 +1,62 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_SiteLayout.cshtml";
+    ViewBag.Title = "Anasayfa";
+}
+ <header>
+            <div class="navbar navbar-default navbar-static-top">
+                <div class="container">
+                    <div class="navbar-header" style="margin-top:-40px;">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="/Anasayfa/">@*<span>K</span>urumsalWeb*@<img src="@ViewBag.Kimlik.LogoURL" /> <span>@ViewBag.Kimlik.Unvan.Substring(0, 1)</span>@ViewBag.Kimlik.Unvan.Substring(1)</a>
+                    </div>
+                    <div class="navbar-collapse collapse ">
+                        <ul class="nav navbar-nav">
+                            <li class="active"><a href="/Anasayfa/">Anasayfa</a></li>
+                            <li><a href="/Hakkimizda/">Hakkımızda</a></li>
+                            <li><a href="/Hizmetlerimiz/">Hizmetlerimiz</a></li>
+                            <li><a href="/BlogPost/">Blog</a></li>
+                            <li><a href="/Iletisim/">İletişim</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </header>
+<section id="featured">
+    <!-- start slider -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <!-- Slider -->
+                @{ 
+                    Html.RenderAction("SliderPartial", "Home");
+                }
+                <!-- end slider -->
+            </div>
+        </div>
+    </div>
+</section>
+<section id="content">
+    <div class="container">
+
+        @*<div class="row">
+            <div class="col-lg-12">
+                <div class="solidline">
+                </div>
+            </div>
+        </div>*@
+        <!-- end divider -->
+        <!-- Portfolio Projects -->
+        <div class="row">
+            @{
+                Html.RenderAction("HizmetPartial", "Home");
+            }
+        </div>
+
+    </div>
+</section>
+

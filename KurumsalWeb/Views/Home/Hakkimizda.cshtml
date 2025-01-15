@@ -1,0 +1,55 @@
+﻿@model KurumsalWeb.Models.Model.Hakkimizda
+@{
+    ViewBag.Title = "Hakkımızda";
+    Layout = "~/Views/Shared/_SiteLayout.cshtml";
+}
+<header>
+    <div class="navbar navbar-default navbar-static-top">
+        <div class="container">
+            <div class="navbar-header" style="margin-top:-40px;">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/Anasayfa/">@*<span>K</span>urumsalWeb*@<img src="@ViewBag.Kimlik.LogoURL" /> <span>@ViewBag.Kimlik.Unvan.Substring(0, 1)</span>@ViewBag.Kimlik.Unvan.Substring(1)</a>
+            </div>
+            <div class="navbar-collapse collapse ">
+                <ul class="nav navbar-nav">
+                    <li><a href="/Anasayfa/">Anasayfa</a></li>
+                    <li class="active"><a href="/Hakkimizda/">Hakkımızda</a></li>
+                    <li><a href="/Hizmetlerimiz/">Hizmetlerimiz</a></li>
+                    <li><a href="/BlogPost/">Blog</a></li>
+                    <li><a href="/Iletisim/">İletişim</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <section id="inner-headline">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <ul class="breadcrumb">
+                        <li><a href="~/Anasayfa/"><i class="fa fa-home"></i></a><i class="icon-angle-right"></i></li>
+                        <li class="active">@ViewBag.Title</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div class="container">
+    <div class="col-md-12">
+        <h4>Kurumsal Web Hakkında</h4>
+        <img src="@Model.ResimURL" alt="" class="align-center img-responsive" />
+        <p>
+            @Html.Raw(Model.Aciklama)
+        </p>
+    </div>
+</div>
+
+

@@ -1,0 +1,20 @@
+﻿@model IEnumerable<KurumsalWeb.Models.Model.Slider>
+@{ 
+    Layout = null;
+}
+<div id="main-slider" class="flexslider">
+    <ul class="slides">
+        @foreach (var slide in Model)
+        {
+            <li>
+                <img src="@slide.ResimURL" alt="@slide.Baslik" />
+                <div class="flex-caption">
+                    <h3>@slide.Baslik</h3>
+                    <p>@slide.Aciklama</p>
+                    <a href="#" class="btn btn-theme">Devamını oku</a>
+                </div>
+            </li>
+        }
+
+    </ul>
+</div>

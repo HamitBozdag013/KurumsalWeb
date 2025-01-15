@@ -1,0 +1,98 @@
+﻿
+@{
+    ViewBag.Title = "İletişim";
+    Layout = "~/Views/Shared/_SiteLayout.cshtml";
+}
+
+<header>
+    <div class="navbar navbar-default navbar-static-top">
+        <div class="container">
+            <div class="navbar-header" style="margin-top:-40px;">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/Anasayfa/">@*<span>K</span>urumsalWeb*@<img src="@ViewBag.Kimlik.LogoURL" /> <span>@ViewBag.Kimlik.Unvan.Substring(0, 1)</span>@ViewBag.Kimlik.Unvan.Substring(1)</a>
+            </div>
+            <div class="navbar-collapse collapse ">
+                <ul class="nav navbar-nav">
+                    <li><a href="/Anasayfa/">Anasayfa</a></li>
+                    <li><a href="/Hakkimizda/">Hakkımızda</a></li>
+                    <li><a href="/Hizmetlerimiz/">Hizmetlerimiz</a></li>
+                    <li><a href="/BlogPost/">Blog</a></li>
+                    <li class="active"><a href="/Iletisim/">İletişim</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <section id="inner-headline">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <ul class="breadcrumb">
+                        <li><a href="~/Anasayfa/"><i class="fa fa-home"></i></a><i class="icon-angle-right"></i></li>
+                        <li class="active">@ViewBag.Title</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div class="container">
+    <div class="map">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1311.4778781054806!2d28.26554465068789!3d38.574374892347244!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14b8698b79538319%3A0x5161527a841b0afb!2sAdala%2C%20Ak%C3%B6ren%2C%2045320%20Salihli%2FManisa!5e0!3m2!1str!2str!4v1714798651879!5m2!1str!2str" width="100%" height="380" frameborder="0" style="border:0" allowfullscreen></iframe>
+    </div>
+</div>
+
+@using (Html.BeginForm("Iletisims", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <h4>Aşağıdaki formu doldurarak bizimle iletişime geçebilirsiniz.</h4>
+
+                @if (TempData["Ok"] != null)
+                {
+                    <div class="alert alert-info mb-2 fw-bold">@TempData["Ok"]</div>
+                }
+                @if (TempData["No"] != null)
+                {
+                    <div class="alert alert-danger mb-2 fw-bold">@TempData["No"]</div>
+                }
+
+
+                <div class="form-group">
+                    <input type="text" name="AdSoyad" class="form-control" id="name" placeholder="Adınız" data-rule="minlen:3" required data-msg="Lütfen en az 3 karakter girin" />
+                    <div class="validation"></div>
+                </div>
+                <div class="form-group">
+                    <input type="email" class="form-control" name="Email" id="email" placeholder="Mail adresiniz" data-rule="email" required />
+                    <div class="validation"></div>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="Konu" id="subject" placeholder="Konu" data-rule="minlen:4" required />
+                    <div class="validation"></div>
+                </div>
+                <div class="form-group">
+                    <textarea class="form-control" name="Mesaj" rows="5" data-rule="required" placeholder="Mesaj" required></textarea>
+                    <div class="validation"></div>
+                </div>
+                <div class="form-group text-right">
+                    <input type="submit" value="Gönder" class="btn btn-theme" />
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+
+
+
+

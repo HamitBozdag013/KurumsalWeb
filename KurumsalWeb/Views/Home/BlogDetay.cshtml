@@ -1,0 +1,139 @@
+﻿@model KurumsalWeb.Models.Model.Blog
+@{
+    ViewBag.Title = "Blog Detay";
+    Layout = "~/Views/Shared/_SiteLayout.cshtml";
+}
+<header>
+    <div class="navbar navbar-default navbar-static-top">
+        <div class="container">
+            <div class="navbar-header" style="margin-top:-40px;">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/Anasayfa/">@*<span>K</span>urumsalWeb*@<img src="@ViewBag.Kimlik.LogoURL" /> <span>@ViewBag.Kimlik.Unvan.Substring(0, 1)</span>@ViewBag.Kimlik.Unvan.Substring(1)</a>
+            </div>
+            <div class="navbar-collapse collapse ">
+                <ul class="nav navbar-nav">
+                    <li><a href="/Anasayfa/">Anasayfa</a></li>
+                    <li><a href="/Hakkimizda/">Hakkımızda</a></li>
+                    <li><a href="/Hizmetlerimiz/">Hizmetlerimiz</a></li>
+                    <li class="active"><a href="/BlogPost/">Blog</a></li>
+                    <li><a href="/Iletisim/">İletişim</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+        <section id="inner-headline">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <ul class="breadcrumb">
+                            <li><a href="~/Anasayfa/"><i class="fa fa-home"></i></a><i class="icon-angle-right"></i></li>
+                            <li><a href="~/BlogPost/">Blog</a><i class="icon-angle-right"></i></li>
+                            <li class="active">@ViewBag.Title</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+    </section>
+    </div>
+
+<section id="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <article>
+                    <div class="post-image">
+                        <div class="post-heading">
+                            <h3>@Model.Baslik</h3>
+                        </div>
+                        <img src="@Model.ResimURL" alt="@Model.Baslik" />
+                    </div>
+                    <p>
+                        @{
+                            @Html.Raw(Model.Icerik)
+                        }
+                    </p>
+                </article>
+
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-1">
+                        <h4> Yorum Yap </h4>
+                        <form>
+                            <input type="text" id="AdSoyad" placeholder="Adınız Soyadınız" required class="form-control" />
+                            <br />
+                            <input type="email" id="Eposta" placeholder="Mail Adresiniz" required class="form-control" />
+                            <br />
+                            <textarea typeof="text" id="YorumIcerik" required class="form-control" placeholder="Yorumunuz"></textarea>
+                            <br />
+                            <button type="submit" class="btn btn-success" id="Gonder">Yorum Yap</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="row">
+                    @if (Model.Yorums.Where(y => y.Onay == true).Count() != 0)
+                    {
+                        <h3 style="text-decoration-line:underline;"> Blog Yorumları </h3>
+                    }
+                    @foreach (var item in Model.Yorums.OrderByDescending(y => y.Id).Where(y => y.Onay == true))
+                    {
+                        <p>@item.AdSoyad - @item.Eposta</p>
+                        <p>@item.YorumIcerik</p>
+                        <hr />
+                    }
+                </div>
+
+            </div>
+            <div class="col-lg-4">
+                <aside class="right-sidebar">
+                    <div class="widget">
+                        <form class="form-search">
+                            <input class="form-control" type="text" placeholder="Arama..">
+                        </form>
+                    </div>
+                    <div class="widget">
+                        <h5 class="widgetheading">Kategoriler</h5>
+                        @{
+                            Html.RenderAction("BlogKategoriPartial", "Home");
+                        }
+                    </div>
+                    <div class="widget">
+                        <h5 class="widgetheading">Popüler Blog Kayıtları</h5>
+                        <ul class="recent">
+                            @{
+                                Html.RenderAction("SonBlogKayitlariPartial", "Home");
+                            }
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="~/Content/SiteLayout/js/jquery.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#Gonder").click(function () {
+            var adisoyadi = $("#AdSoyad").val();
+            var epostasi = $("#Eposta").val();
+            var yorumunuz = $("#YorumIcerik").val();
+            $.ajax({
+                url: '/Home/YorumYap/',
+                type: 'POST',
+                dataType: 'JSON',
+                data: { AdSoyad: adisoyadi, Eposta: epostasi, YorumIcerik: yorumunuz, BlogId: @Model.Id},
+                success: function (data) {
+                    alert("Yorumunuz eklendi, kontrol edildikten sonra yayınlanacaktır.");
+                }
+            });
+        });
+    })
+</script>

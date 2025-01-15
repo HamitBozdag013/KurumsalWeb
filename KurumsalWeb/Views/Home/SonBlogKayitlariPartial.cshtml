@@ -1,0 +1,24 @@
+﻿@using System.Text.RegularExpressions;
+@using KurumsalWeb.Helper;
+@model IEnumerable<KurumsalWeb.Models.Model.Blog>
+
+
+@foreach (var blog in Model)
+{
+    <li>
+        <img src="@blog.ResimURL" class="pull-left" alt="@blog.Baslik" />
+        <h6><a href="/BlogPost/@SeoHelper.ToSeoUrl(blog.Baslik).ToLower()-@blog.Id">@blog.Baslik</a></h6>
+        <p>
+            @{
+                string kisaltma = Regex.Replace(blog.Icerik, "<.*?>", string.Empty);
+                if (kisaltma.Length > 200)
+                {
+                    kisaltma = kisaltma.Substring(0, 100) + "...";
+                }
+                @Html.Raw(kisaltma)
+            }
+        </p>
+    </li>
+    <br />
+}
+
